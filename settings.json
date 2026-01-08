@@ -10,23 +10,25 @@
   },
   "permissions": {
     "allow": [
-      "WebFetch(domain:docs.redhat.com)",
-      "WebFetch(domain:issues.redhat.com)",
       "WebFetch(domain:api.github.com)",
-      "WebFetch(domain:prow.ci.openshift.org)",
+      "WebFetch(domain:docs.redhat.com)",
       "WebFetch(domain:gcsweb-ci.apps.ci.l2s4.p1.openshiftapps.com)",
-      "WebFetch(domain:pkg.go.dev)",
-      "WebFetch(domain:k8s.io)",
-      "WebFetch(domain:sigs.k8s.io)",
       "WebFetch(domain:github.com)",
+      "WebFetch(domain:go.googlesource.com)",
+      "WebFetch(domain:go.uber.org)",
       "WebFetch(domain:golang.org)",
       "WebFetch(domain:google.golang.org)",
-      "WebFetch(domain:proxy.golang.org)",
-      "WebFetch(domain:go.googlesource.com)",
-      "WebFetch(domain:storage.googleapis.com)",
-      "WebFetch(domain:go.uber.org)",
       "WebFetch(domain:gopkg.in)",
       "WebFetch(domain:gotest.tools)"
+      "WebFetch(domain:index.golang.org)",
+      "WebFetch(domain:issues.redhat.com)",
+      "WebFetch(domain:k8s.io)",
+      "WebFetch(domain:pkg.go.dev)",
+      "WebFetch(domain:prow.ci.openshift.org)",
+      "WebFetch(domain:proxy.golang.org)",
+      "WebFetch(domain:sigs.k8s.io)",
+      "WebFetch(domain:storage.googleapis.com)",
+      "WebFetch(domain:sum.golang.org)",
     ]
   }
 }

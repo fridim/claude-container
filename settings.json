@@ -21,7 +21,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:golang.org)",
       "WebFetch(domain:google.golang.org)",
+      "WebFetch(domain:proxy.golang.org)",
       "WebFetch(domain:go.googlesource.com)",
+      "WebFetch(domain:storage.googleapis.com)",
       "WebFetch(domain:go.uber.org)",
       "WebFetch(domain:gopkg.in)",
       "WebFetch(domain:gotest.tools)"

@@ -3,7 +3,6 @@
 set -e
 
 proj_name="$(basename "${PWD}")"
-vertex_default_project="$(sed -n -e 's/project = \(.*\)/\1/' -e T -e p ~/.config/gcloud/configurations/config_default)"
 
 mkdir -p ~/.claude
 if ! [ -e ~/.claude.json ]; then
@@ -23,9 +22,12 @@ mkdir -p ~/.config/git
 
 exec podman run -i -t --tz=local \
     --name="claude-${proj_name}" --rm \
-    --env "ANTHROPIC_VERTEX_PROJECT_ID=${vertex_default_project}" \
+    --env "ANTHROPIC_VERTEX_PROJECT_ID=${ANTHROPIC_VERTEX_PROJECT_ID}" \
+    --env "CLAUDE_CODE_USE_VERTEX=1" \
+    --env "CLOUD_ML_REGION=us-east5" \
     --secret claude-github-token,type=env,target=GH_TOKEN \
     --userns=keep-id \
+    --network=host \
     --security-opt 'unmask=/proc/*' \
     --security-opt label=type:container_userns_t \
     --mount type=tmpfs,destination=/tmp/claude \

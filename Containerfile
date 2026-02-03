@@ -23,6 +23,7 @@ COPY settings.json /etc/claude-code/managed-settings.json
 
 ARG UID=1000
 ARG GID=1000
+RUN groupadd -g "${GID}" claude
 RUN useradd -u "${UID}" -g "${GID}" -m claude
 COPY sudoers /etc/sudoers.d/claude
 USER ${UID}:${GID}

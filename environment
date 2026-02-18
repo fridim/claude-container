@@ -1,2 +1,2 @@
-PATH="${PATH}:${GOBIN:-${GOPATH:-${HOME}/go}/bin}"
+PATH="${PATH}:${GOBIN:-${GOPATH:-${HOME}/go}/bin}:${HOME}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:${PATH}"
 export PATH

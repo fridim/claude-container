@@ -6,6 +6,7 @@ RUN dnf install -y \
     bubblewrap \
     socat \
     nodejs \
+    rustup \
     && dnf clean all
 
 RUN curl --silent --location \
@@ -26,6 +27,12 @@ ARG GID=1000
 RUN groupadd -g "${GID}" claude
 RUN useradd -u "${UID}" -g "${GID}" -m claude
 COPY sudoers /etc/sudoers.d/claude
+# Rust
+RUN su - claude -c "rustup-init -y --default-toolchain stable --profile default" \
+    && su - claude -c "source /home/claude/.cargo/env && rustup component add rustfmt clippy"
+# Install uv (modern Python package manager)
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+#
 USER ${UID}:${GID}
 ENV BASH_ENV=/home/claude/.bash_environment
 COPY environment $BASH_ENV

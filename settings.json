@@ -19,7 +19,7 @@
       "WebFetch(domain:golang.org)",
       "WebFetch(domain:google.golang.org)",
       "WebFetch(domain:gopkg.in)",
-      "WebFetch(domain:gotest.tools)"
+      "WebFetch(domain:gotest.tools)",
       "WebFetch(domain:index.golang.org)",
       "WebFetch(domain:issues.redhat.com)",
       "WebFetch(domain:k8s.io)",
@@ -28,7 +28,7 @@
       "WebFetch(domain:proxy.golang.org)",
       "WebFetch(domain:sigs.k8s.io)",
       "WebFetch(domain:storage.googleapis.com)",
-      "WebFetch(domain:sum.golang.org)",
+      "WebFetch(domain:sum.golang.org)"
     ]
   }
 }

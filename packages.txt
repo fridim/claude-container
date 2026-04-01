@@ -1,4 +1,5 @@
 @development-tools
+ShellCheck
 gh
 git
 gnupg2

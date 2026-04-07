@@ -21,7 +21,7 @@ fi
 mkdir -p ~/.config/git
 
 exec podman run -i -t --tz=local \
-    --name="claude-${proj_name}" --rm \
+    --name="claude-${proj_name}"-$$ --rm \
     --env "ANTHROPIC_VERTEX_PROJECT_ID=${ANTHROPIC_VERTEX_PROJECT_ID}" \
     --env "CLAUDE_CODE_USE_VERTEX=1" \
     --env "CLOUD_ML_REGION=us-east5" \

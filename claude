@@ -26,6 +26,7 @@ exec podman run -i -t --tz=local \
     --env "CLAUDE_CODE_USE_VERTEX=1" \
     --env "CLOUD_ML_REGION=us-east5" \
     --secret claude-github-token,type=env,target=GH_TOKEN \
+    --env "GOOGLE_WORKSPACE_CLI_KEYRING_BACKEND=file" \
     --userns=keep-id \
     --network=host \
     --security-opt 'unmask=/proc/*' \
@@ -35,6 +36,7 @@ exec podman run -i -t --tz=local \
     -v "${PWD}:/projects/${proj_name}:z" \
     -w "/projects/${proj_name}" \
     -v ~/.config/gcloud:/home/claude/.config/gcloud:z \
+    -v ~/.config/gws:/home/claude/.config/gws:ro,z \
     -v ~/.gitconfig:/home/claude/.gitconfig:ro,z \
     -v ~/.config/git:/home/claude/.config/git:ro,z \
     -v ~/.claude:/home/claude/.claude:z \

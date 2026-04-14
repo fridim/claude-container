@@ -38,6 +38,7 @@ ENV BASH_ENV=/home/claude/.bash_environment
 COPY environment $BASH_ENV
 
 ENV PATH=/home/claude/.local/bin:/usr/local/bin:/usr/bin
+RUN npm install -g @googleworkspace/cli
 RUN curl -fsSL --proto-redir '-all,https' --tlsv1.3 https://claude.ai/install.sh | bash
 
 RUN mkdir /home/claude/.config

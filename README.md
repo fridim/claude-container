@@ -109,6 +109,33 @@ do:
 gh auth token | podman secret create --replace claude-github-token
 ```
 
+Google Workspace integration
+----------------------------
+
+To allow Claude to query your Gmail, Calendar, Drive, and Tasks (read-only),
+install the [Google Workspace CLI](https://github.com/googleworkspace/cli) on
+your host and set up credentials:
+
+```
+npm install -g @googleworkspace/cli
+gws auth setup
+gws auth login
+```
+
+During `gws auth login`, select **only read-only scopes** for each service:
+`gmail.readonly`, `calendar.readonly`, `drive.readonly`, `tasks.readonly`.
+
+The container mounts `~/.config/gws/` read-only and sets
+`GOOGLE_WORKSPACE_CLI_KEYRING_BACKEND=file` so `gws` can decrypt
+credentials using the file-based encryption key.
+
+To test inside the container:
+
+```
+gws gmail users.messages list --userId me --maxResults 3
+gws calendar events list --calendarId primary --timeMin $(date -u +%Y-%m-%dT%H:%M:%SZ)
+```
+
 Drawbacks
 ---------
 

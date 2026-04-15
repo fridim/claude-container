@@ -21,10 +21,13 @@ RUN dnf install -y $(cat /opt/packages.txt) \
 
 COPY settings.json /etc/claude-code/managed-settings.json
 
+RUN npm install -g @googleworkspace/cli
+RUN go install github.com/ankitpokhrel/jira-cli/cmd/jira@latest \
+    && mv /root/go/bin/jira /usr/local/bin/jira
 
 ARG UID=1000
 ARG GID=1000
-RUN groupadd -g "${GID}" claude
+RUN groupadd -g "${GID}" claude 2>/dev/null || true
 RUN useradd -u "${UID}" -g "${GID}" -m claude
 COPY sudoers /etc/sudoers.d/claude
 # Rust
@@ -38,7 +41,6 @@ ENV BASH_ENV=/home/claude/.bash_environment
 COPY environment $BASH_ENV
 
 ENV PATH=/home/claude/.local/bin:/usr/local/bin:/usr/bin
-RUN npm install -g @googleworkspace/cli
 RUN curl -fsSL --proto-redir '-all,https' --tlsv1.3 https://claude.ai/install.sh | bash
 
 RUN mkdir /home/claude/.config

@@ -132,8 +132,41 @@ credentials using the file-based encryption key.
 To test inside the container:
 
 ```
-gws gmail users.messages list --userId me --maxResults 3
-gws calendar events list --calendarId primary --timeMin $(date -u +%Y-%m-%dT%H:%M:%SZ)
+gws gmail users getProfile --params '{"userId": "me"}'
+gws calendar events list --params '{"calendarId": "primary", "singleEvents": true, "orderBy": "startTime"}'
+```
+
+Jira integration
+----------------
+
+To allow Claude to manage Jira issues, first set up
+[jira-cli](https://github.com/ankitpokhrel/jira-cli) on your **host**:
+
+```
+go install github.com/ankitpokhrel/jira-cli/cmd/jira@latest
+export JIRA_API_TOKEN=YOUR_TOKEN    # from https://id.atlassian.com/manage-profile/security/api-tokens
+jira init
+```
+
+`jira init` is interactive — it queries your Jira instance for issue types,
+boards, and custom fields, then writes a full config to
+`~/.config/.jira/.config.yml`. This step **cannot** be done inside the
+container (the TUI board picker requires interactive input).
+
+Once initialized, create the Podman secrets:
+
+```
+podman secret create --replace jira-api-token <(echo -n 'YOUR_TOKEN')
+podman secret create --replace jira-config ~/.config/.jira/.config.yml
+```
+
+The container mounts the config at `~/.config/.jira/.config.yml` and injects
+`JIRA_API_TOKEN` as an environment variable.
+
+To test inside the container:
+
+```
+jira issue list -q 'assignee = currentUser() AND status not in (Closed)' --project YOURPROJECT
 ```
 
 Drawbacks

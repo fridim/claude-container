@@ -17,6 +17,14 @@ if ! podman secret exists claude-github-token; then
     echo '' | podman secret create claude-github-token -
 fi
 
+if ! podman secret exists jira-api-token; then
+    echo '' | podman secret create jira-api-token -
+fi
+
+if ! podman secret exists jira-config; then
+    echo '' | podman secret create jira-config -
+fi
+
 # Create directory for additional git config if it doesn't exist
 mkdir -p ~/.config/git
 
@@ -26,6 +34,8 @@ exec podman run -i -t --tz=local \
     --env "CLAUDE_CODE_USE_VERTEX=1" \
     --env "CLOUD_ML_REGION=us-east5" \
     --secret claude-github-token,type=env,target=GH_TOKEN \
+    --secret jira-api-token,type=env,target=JIRA_API_TOKEN \
+    --secret jira-config,type=mount,target=/home/claude/.config/.jira/.config.yml \
     --env "GOOGLE_WORKSPACE_CLI_KEYRING_BACKEND=file" \
     --userns=keep-id \
     --network=host \

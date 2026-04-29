@@ -33,6 +33,7 @@ exec podman run -i -t --tz=local \
     --env "ANTHROPIC_VERTEX_PROJECT_ID=${ANTHROPIC_VERTEX_PROJECT_ID}" \
     --env "CLAUDE_CODE_USE_VERTEX=${CLAUDE_CODE_USE_VERTEX:-1}" \
     --env "CLOUD_ML_REGION=us-east5" \
+    --log-driver=none \
     --secret claude-github-token,type=env,target=GH_TOKEN \
     --secret jira-api-token,type=env,target=JIRA_API_TOKEN \
     --secret jira-config,type=mount,target=/home/claude/.config/.jira/.config.yml \

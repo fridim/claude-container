@@ -41,7 +41,7 @@ exec podman run -i -t --tz=local \
     --userns=keep-id \
     --network=host \
     --security-opt 'unmask=/proc/*' \
-    --security-opt label=type:container_userns_t \
+    --security-opt label=type:container_engine_t \
     --mount type=tmpfs,destination=/tmp/claude,U \
     --mount type=tmpfs,destination="/tmp/claude-$(id -ru)",U \
     -v "${PWD}:/projects/${proj_name}:z" \

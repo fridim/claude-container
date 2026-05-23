@@ -169,6 +169,36 @@ To test inside the container:
 jira issue list -q 'assignee = currentUser() AND status not in (Closed)' --project YOURPROJECT
 ```
 
+Kotlin / Android development
+----------------------------
+
+The container ships with JDK 25 and the Android command-line tools
+(`sdkmanager`, `avdmanager`) installed at `/opt/android-sdk`. `ANDROID_HOME`
+and `ANDROID_SDK_ROOT` are set, and the tools are on `PATH`.
+
+SDK components (platforms, build-tools, platform-tools) are **not**
+pre-installed — they're downloaded on first use into `~/.android` (which the
+`claude` script mounts from your host so they persist across container runs).
+
+On first use, accept the SDK licenses and install the components for your
+target API level. For example, for Android 15 (API 35):
+
+```
+sdkmanager --licenses
+sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+```
+
+Or just run `./gradlew assembleDebug` in a real Android project and let
+Gradle drive `sdkmanager` for you (after licenses are accepted).
+
+Gradle itself is not installed — every Android project ships a `gradlew`
+wrapper that downloads the correct Gradle version on first build.
+
+Note: Android builds reach out to Google's Maven repo, Maven Central,
+`services.gradle.org`, and `plugins.gradle.org`. These are allowed in the
+managed `settings.json`, but Bash-tool commands invoked by Claude may still
+be sandboxed. Approve Gradle invocations when prompted, or run in yolo mode.
+
 Drawbacks
 ---------
 

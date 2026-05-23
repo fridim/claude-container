@@ -19,6 +19,30 @@ COPY packages.txt /opt/packages.txt
 RUN dnf install -y $(cat /opt/packages.txt) \
     && dnf clean all
 
+# Android SDK: cmdline-tools, platforms, build-tools, platform-tools
+ARG ANDROID_CMDLINE_TOOLS_VERSION=11076708
+RUN mkdir -p /opt/android-sdk/cmdline-tools \
+    && curl --silent --location \
+       "https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_CMDLINE_TOOLS_VERSION}_latest.zip" \
+       -o /tmp/cmdline-tools.zip \
+    && unzip -q /tmp/cmdline-tools.zip -d /opt/android-sdk/cmdline-tools \
+    && mv /opt/android-sdk/cmdline-tools/cmdline-tools /opt/android-sdk/cmdline-tools/latest \
+    && rm /tmp/cmdline-tools.zip \
+    && yes | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=/opt/android-sdk \
+       "platforms;android-35" "build-tools;36.0.0" "platform-tools" \
+    && chmod -R a+rw /opt/android-sdk
+ENV ANDROID_HOME=/opt/android-sdk \
+    ANDROID_SDK_ROOT=/opt/android-sdk \
+    ANDROID_USER_HOME=/home/claude/.android
+
+# Gradle
+ARG GRADLE_VERSION=9.5.1
+RUN curl --silent --location \
+       "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
+       -o /tmp/gradle.zip \
+    && unzip -qo /tmp/gradle.zip -d /opt \
+    && rm /tmp/gradle.zip
+
 COPY settings.json /etc/claude-code/managed-settings.json
 
 RUN npm install -g @googleworkspace/cli
@@ -40,7 +64,7 @@ USER ${UID}:${GID}
 ENV BASH_ENV=/home/claude/.bash_environment
 COPY environment $BASH_ENV
 
-ENV PATH=/home/claude/.local/bin:/usr/local/bin:/usr/bin
+ENV PATH=/home/claude/.local/bin:/opt/gradle-9.5.1/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:/usr/local/bin:/usr/bin
 ARG VERSION=stable
 RUN curl -fsSL --proto-redir '-all,https' --tlsv1.3 https://claude.ai/install.sh | bash -s "${VERSION}"
 

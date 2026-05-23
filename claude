@@ -28,6 +28,9 @@ fi
 # Create directory for additional git config if it doesn't exist
 mkdir -p ~/.config/git
 
+# Persist Android SDK license acceptance and downloaded SDK components
+mkdir -p ~/.android
+
 exec podman run -i -t --tz=local \
     --name="claude-${proj_name}"-$$ --rm \
     --env "ANTHROPIC_VERTEX_PROJECT_ID=${ANTHROPIC_VERTEX_PROJECT_ID}" \
@@ -52,4 +55,5 @@ exec podman run -i -t --tz=local \
     -v ~/.config/git:/home/claude/.config/git:ro,z \
     -v ~/.claude:/home/claude/.claude:z \
     -v ~/.claude.json:/home/claude/.claude.json:z \
+    -v ~/.android:/home/claude/.android:z \
     localhost/claude:latest "$@"

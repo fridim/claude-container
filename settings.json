@@ -26,9 +26,12 @@
       "WebFetch(domain:issues.redhat.com)",
       "WebFetch(domain:k8s.io)",
       "WebFetch(domain:pkg.go.dev)",
+      "WebFetch(domain:plugins.gradle.org)",
       "WebFetch(domain:prow.ci.openshift.org)",
       "WebFetch(domain:proxy.golang.org)",
       "WebFetch(domain:release-assets.githubusercontent.com)",
+      "WebFetch(domain:repo.maven.apache.org)",
+      "WebFetch(domain:services.gradle.org)",
       "WebFetch(domain:sigs.k8s.io)",
       "WebFetch(domain:storage.googleapis.com)",
       "WebFetch(domain:sum.golang.org)"

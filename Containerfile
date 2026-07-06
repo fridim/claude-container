@@ -15,6 +15,12 @@ RUN curl --silent --location \
     && mv /tmp/hurl-*/bin/* /usr/local/bin/ \
     && rm -rf /tmp/hurl-*
 
+# jj (Jujutsu) — Git-compatible VCS
+ARG JJ_VERSION=0.42.0
+RUN curl --silent --location \
+    "https://github.com/jj-vcs/jj/releases/download/v${JJ_VERSION}/jj-v${JJ_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+    | tar xz --strip-components=0 -C /usr/local/bin/ ./jj
+
 COPY packages.txt /opt/packages.txt
 RUN dnf install -y $(cat /opt/packages.txt) \
     && dnf clean all
@@ -68,7 +74,7 @@ ENV PATH=/home/claude/.local/bin:/opt/gradle-9.5.1/bin:/opt/android-sdk/cmdline-
 ARG VERSION=stable
 RUN curl -fsSL --proto-redir '-all,https' --tlsv1.3 https://claude.ai/install.sh | bash -s "${VERSION}"
 
-RUN mkdir /home/claude/.config
+RUN mkdir -p /home/claude/.config/jj
 WORKDIR /projects
 ENV CLAUDE_CODE_USE_VERTEX=1 CLOUD_ML_REGION=global DISABLE_AUTOUPDATER=1
 ENTRYPOINT ["/home/claude/.local/bin/claude"]

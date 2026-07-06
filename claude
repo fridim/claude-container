@@ -51,6 +51,7 @@ exec podman run -i -t --tz=local \
     -v "${PWD}:/projects/${proj_name}:z" \
     -w "/projects/${proj_name}" \
     -v ~/.config/gcloud:/home/claude/.config/gcloud:z \
+    -v ~/.config/gws:/home/claude/.config/gws:ro,z \
     -v ~/.gitconfig:/home/claude/.gitconfig:ro,z \
     -v ~/.config/git:/home/claude/.config/git:ro,z \
     -v ~/.config/jj:/home/claude/.config/jj:z \
